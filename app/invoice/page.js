@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react"; //provides tools for creating dropdown menus
 import { Autocomplete, TextField } from '@mui/material' //provides tools for autofilling input fields
 import generateInvoicePDF from './invoicePdfGenerator'; //imports function for generating the invoice pdf
-
+import Header from "../components/Header";
 
 //hooks for form functionality
 const Invoices = () => {
@@ -346,7 +346,10 @@ const Invoices = () => {
 
     
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+ 
+    <div className="flex flex-grow flex-col justify-between">
+    <Header title="Create Invoice" />
+    <div className="flex flex-col items-center justify-between card">
       <div className="p-6 md:shrink-0 smartphone:shrink-0 ">
         {/* Logo and Address Section */}
         <div className="flex flex-col items-start space-y-2 mb-15">
@@ -360,11 +363,11 @@ const Invoices = () => {
         {/* Billing Date and Invoice Number */}
         <div className="flex flex-row items-center justify-end space-x-20 mb-6">
           <div className="flex flex-col items-center border border-none w-48 h-20">
-            <span className="bg-custom-blue w-full h-full flex items-center justify-center p-2 text-white">Billing Date</span>
+            <span className="bg-custom-blue w-full h-full flex items-center justify-center p-2">Billing Date</span>
             <span className="bg-white w-full h-full flex items-center justify-center p-2 border-t border-black">{billingDate}</span>
           </div>
           <div className="flex flex-col items-center border border-none w-48 h-20">
-            <span className="bg-custom-blue w-full h-full flex items-center justify-center p-2 text-white">Invoice #</span>
+            <span className="bg-custom-blue w-full h-full flex items-center justify-center p-2">Invoice #</span>
             <span className="bg-white w-full h-full flex items-center justify-center p-2 border-t border-black">{invoiceNumber}</span>
           </div>
         </div>
@@ -539,7 +542,7 @@ const Invoices = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <button
                       onClick={() => removeRow(index)}
-                      className={`px-4 py-2 rounded ${rows.length <= 1 ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-500 hover:bg-red-700 :-translate-y-1 hover:scale-110 duration-500 hover: drop-shadow-xl text-white transition ease-in-out delay-50'}`}
+                      className={`px-4 py-2 rounded ${rows.length <= 1 ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-500 hover:bg-red-700 :-translate-y-1 hover:scale-110 duration-500 hover: drop-shadow-xl transition ease-in-out delay-50'}`}
                       disabled={rows.length <= 1}
 
                     >
@@ -553,7 +556,7 @@ const Invoices = () => {
           {/* End of Invoice Table */}
 
           {/* Add row button */}
-          <button onClick={addRow} className="mt-10 p-2 bg-custom-blue border-custom-blue border-2 text-white rounded mx-auto block font-semibold transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-500 hover: drop-shadow-xl hover:border-black">Add Row</button>
+          <button onClick={addRow} className="mt-10 p-2 bg-custom-blue border-custom-blue border-2 rounded mx-auto block font-semibold transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-500 hover: drop-shadow-xl hover:border-black">Add Row</button>
         </div>
 
         {/* Divider */}
@@ -607,7 +610,8 @@ const Invoices = () => {
           </button>
         </div>
       </div>
-    </main>
+    </div>
+    </div>
   );
 };
 

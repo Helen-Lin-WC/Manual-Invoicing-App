@@ -1,5 +1,6 @@
 "use client" // tells react this page should be rendered on the client side
 import { useEffect, useState } from 'react';
+import Header from "../components/Header";
 
 //hooks for form functionality
 export default function ViewInvoices() {
@@ -225,12 +226,10 @@ export default function ViewInvoices() {
   
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-gray-100">
-      <header className="bg-custom-blue text-black rounded p-4 text-center">
-        <h1 className="text-2xl font-bold">Invoices</h1>
-      </header>
+    <div className="flex flex-grow flex-col justify-between">
+          <Header title="Invoices"/>
 
-      <main className="flex-grow p-4">
+      <div className="flex-grow p-4">
         <div className="bg-white shadow-lg rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Invoice List</h2>
 
@@ -422,7 +421,7 @@ export default function ViewInvoices() {
                   {/*button for deleting invoices*/}
                   <button type="button" 
                    onClick={handleDelete} 
-                   className="inline-block py-2 px-4 bg-red-500 text-white p-2 rounded font-semibold transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-500 hover: drop-shadow-xl hover:border-none" 
+                   className="inline-block py-2 px-4 bg-red-500 p-2 rounded font-semibold transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-500 hover: drop-shadow-xl hover:border-none" 
                    disabled={selectedInvoice.INVOICE_PAID === 'Y' || isReadOnly}
                   >
                     Delete Invoice
@@ -432,7 +431,7 @@ export default function ViewInvoices() {
                   <button
                     type="button"
                     onClick={handlePaymentStatusClick}
-                    className="inline-block py-2 px-4 bg-blue-500 text-white rounded"
+                    className="inline-block py-2 px-4 bg-blue-500 rounded"
                     disabled={selectedInvoice.INVOICE_PAID === 'Y' || isReadOnly}
                   >
                     Payment Status
@@ -442,7 +441,7 @@ export default function ViewInvoices() {
             </div>
           )}
         </div>
-      </main>
+      </div>
     </div>
   );
 }
