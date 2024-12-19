@@ -18,7 +18,7 @@ module.exports = {
     extend: {
       colors: {
         'custom-blue': '#466786', //Whitecap Blue
-
+        'custom-hover-blue': '#2e4459' 
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

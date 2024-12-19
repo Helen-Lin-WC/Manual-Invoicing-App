@@ -262,85 +262,88 @@ const Invoices = () => {
 
   //functionality on accept
   const handleSendInvoice = async () => {
-    const confirmation = window.confirm("A copy of this form will be sent to generalbanking@wcap.ca. Click Ok to send.");
-    if (!confirmation) return;
 
-    //checks if any required fields are left empty
-    if (!validateFields()) {
-      setShowErrorMessage(true);
-      return;
-    }
+    //TODO Uncomment this 
+    // const confirmation = window.confirm("A copy of this form will be sent to generalbanking@wcap.ca. Click Ok to send.");
+    // if (!confirmation) return;
 
-    setShowErrorMessage(false);
+    // //checks if any required fields are left empty
+    // if (!validateFields()) {
+    //   setShowErrorMessage(true);
+    //   return;
+    // }
 
-    try {
-      const pdfBlob = generateInvoicePDF({
-        invoiceNumber,
-        billingDate,
-        selectedCompany,
-        streetName,
-        cityName,
-        selectedProvince,
-        postalCode,
-        REInput,
-        rows,
-        subtotal,
-        GST,
-        PST,
-        PSTAmount,
-        totalDue,
-        comment
-      });
+    // setShowErrorMessage(false);
 
-      //appends all data to be sent to the server.js file
-      const formData = new FormData();
-      formData.append('pdf', pdfBlob, 'invoice.pdf');
-      formData.append('selectedCompany', selectedCompany);
-      formData.append('streetName', streetName);
-      formData.append('cityName', cityName);
-      formData.append('selectedProvince', selectedProvince);
-      formData.append('postalCode', postalCode);
-      formData.append('REInput', REInput);
-      formData.append('invoiceNumber', invoiceNumber);
-      formData.append('billingDate', billingDate);
-      formData.append('unitPrice', rows.map(row => row.unitPrice));
-      formData.append('quantity', rows.map(row => row.quantity));
-      formData.append('totalDue', rows.map(row => row.totalDue));
-      formData.append('costCentre', rows.map(row => row.cc));
-      formData.append('coding', rows.map(row => row.coding));
-      formData.append('item', rows.map(row => row.item));
-      formData.append('description', rows.map(row => row.description));
-      formData.append('comment', comment);
-      formData.append('rows', JSON.stringify(rows));
+    // try {
+    //   const pdfBlob = generateInvoicePDF({
+    //     invoiceNumber,
+    //     billingDate,
+    //     selectedCompany,
+    //     streetName,
+    //     cityName,
+    //     selectedProvince,
+    //     postalCode,
+    //     REInput,
+    //     rows,
+    //     subtotal,
+    //     GST,
+    //     PST,
+    //     PSTAmount,
+    //     totalDue,
+    //     comment
+    //   });
 
-      const response = await axios.post('http://localhost:3001/api/sendInvoice', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+    //   //appends all data to be sent to the server.js file
+    //   const formData = new FormData();
+    //   formData.append('pdf', pdfBlob, 'invoice.pdf');
+    //   formData.append('selectedCompany', selectedCompany);
+    //   formData.append('streetName', streetName);
+    //   formData.append('cityName', cityName);
+    //   formData.append('selectedProvince', selectedProvince);
+    //   formData.append('postalCode', postalCode);
+    //   formData.append('REInput', REInput);
+    //   formData.append('invoiceNumber', invoiceNumber);
+    //   formData.append('billingDate', billingDate);
+    //   formData.append('unitPrice', rows.map(row => row.unitPrice));
+    //   formData.append('quantity', rows.map(row => row.quantity));
+    //   formData.append('totalDue', rows.map(row => row.totalDue));
+    //   formData.append('costCentre', rows.map(row => row.cc));
+    //   formData.append('coding', rows.map(row => row.coding));
+    //   formData.append('item', rows.map(row => row.item));
+    //   formData.append('description', rows.map(row => row.description));
+    //   formData.append('comment', comment);
+    //   formData.append('rows', JSON.stringify(rows));
 
-      if (response.status === 200) {
-        alert('Invoice sent successfully!');
-        //clears all input fields when an invoice is successfully sent
-        setSelectedCompany('');
-        setStreetName('');
-        setCityName('');
-        setSelectedProvince('');
-        setPostalCode('');
-        setREInput('');
-        setRows([{ quantity: '', item: '', description: '', cc: '', coding: '', unitPrice: '' }]);
-        setComment('');
-        window.location.href = '/invoice'; // Refreshes the page after invoice is successfully created
+    //   const response = await axios.post('http://localhost:3001/api/sendInvoice', formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    //   });
 
-      
-      } else {
-        console.error('Unexpected response:', response);
-        alert('Failed to send invoice. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error sending email:', error);
-      alert('Failed to send invoice. Please try again.');
-    }
+    // if (response.status === 200) {
+    //   alert('Invoice sent successfully!');
+    //   //clears all input fields when an invoice is successfully sent
+    //   setSelectedCompany('');
+    //   setStreetName('');
+    //   setCityName('');
+    //   setSelectedProvince('');
+    //   setPostalCode('');
+    //   setREInput('');
+    //   setRows([{ quantity: '', item: '', description: '', cc: '', coding: '', unitPrice: '' }]);
+    //   setComment('');
+    //   window.location.href = '/invoice'; // Refreshes the page after invoice is successfully created
+   
+    //   } else {
+    //     console.error('Unexpected response:', response);
+    //     alert('Failed to send invoice. Please try again.');
+    //   }
+    // } catch (error) {
+    //   console.error('Error sending email:', error);
+    //   alert('Failed to send invoice. Please try again.');
+    // }
+
+
   }
   
 
