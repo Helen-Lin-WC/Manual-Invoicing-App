@@ -146,8 +146,13 @@ const mockInvoices = [
 
   //saves a deep copy of the invoice details to compare to the edited one
   const handleSelectInvoice = (invoice) => {
+    if (selectedInvoice?.INVOICE_ID === invoice.INVOICE_ID) {
+      setSelectedInvoice(null);  // Unselect the invoice
+      setInitialSelectedInvoice(null);  // Reset the deep copy state
+    } else {
     setSelectedInvoice(invoice);
     setInitialSelectedInvoice(JSON.parse(JSON.stringify(invoice))); // Deep copy to avoid reference issues
+    }
   };
 
   const handleInputChange = (e) => {
@@ -363,23 +368,17 @@ const handleSave = () => {
 
   return (
     <div className="flex flex-grow flex-col justify-center">
-        <h2 className="text-xl font-semibold mb-4">Welcome</h2>
-       <div className="flex flex-col flex-grow items-end justify-center p-2">     
-          <div className="flex space-x-5 justify-center">
-          <Link href="/invoice">
-            <button className="inline-block py-2 px-4 bg-custom-blue border-custom-blue text-black rounded font-semibold hover:bg-custom-hover-blue hover:text-white">
-              Create A New Invoice
-            </button>
-          </Link>
-          </div>
-      
-      </div>
     <div className="flex flex-grow flex-col justify-between">
-          <Header title="Invoices"/>
-
-      <div className="flex-grow p-4">
-        <div className="bg-white shadow-lg rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Invoice List</h2>
+        <div className="flex-grow p-4">
+          <div className="bg-white shadow-lg rounded-lg p-6">
+      <div className='flex flex-row justify-between'>
+        <h2 className="text-xl font-semibold mb-4">Invoice List</h2>    
+        <Link href="/invoice">
+          <button className="inline-block py-2 px-4 mb-4 bg-gray-300 text-black rounded font-semibold hover:bg-gray-400">
+            Create New Invoice
+          </button>
+        </Link>  
+      </div>
               {/* Filter Inputs */}
       <div className="mb-4 grid grid-cols-3 gap-4">
             <input type="text" name="invoiceNo" placeholder="Invoice Number" value={filters.invoiceNo} onChange={handleFilterChange} className="p-2 border" />
@@ -391,46 +390,46 @@ const handleSave = () => {
             <input type="text" name="saleUnitPrice" placeholder="Sale Unit Price" value={filters.saleUnitPrice} onChange={handleFilterChange} className="p-2 border" />
           </div>
           <div className="space-x-4">
-          <button onClick={applyFilters} className="inline-block py-2 px-4 bg-custom-blue border-custom-blue text-black rounded font-semibold hover:bg-custom-hover-blue hover:text-white">Apply Filters</button>
-          <button onClick={resetFilters} className="inline-block py-2 px-4 bg-white text-black rounded font-semibold hover:bg-gray-50 hover:text-white">Clear</button>
+          <button onClick={applyFilters} className="inline-block py-2 px-4 bg-gray-300 text-black rounded font-semibold hover:bg-gray-400">Apply Filters</button>
+          <button onClick={resetFilters} className="inline-block py-2 px-4 bg-gray-100 text-black rounded font-semibold hover:bg-gray-200">Clear</button>
           </div>
 
           {/* Table for filtered invoices */}
           <table className="min-w-full bg-white mt-4">
             <thead>
-              <tr>
-                <th className="py-2">Select</th>
-                <th className="py-2">Invoice Number</th>
-                <th className="py-2">Invoice Date</th>
-                <th className="py-2">Vendor Name</th>
-                <th className="py-2">Company Name</th>
-                <th className="py-2">Item Description</th>
-                <th className="py-2">Item Type</th>
-                <th className="py-2">Sale Unit Price</th>
-                <th className="py-2">Quantity</th>
-                <th className="py-2">Payment Status</th>
+              <tr className="py-2">
+                <th className="py-2 text-left">Select</th>
+                <th className="py-2 text-left">Invoice Number</th>
+                <th className="py-2 text-left">Invoice Date</th>
+                <th className="py-2 text-left">Vendor Name</th>
+                <th className="py-2 text-left">Company Name</th>
+                <th className="py-2 text-left">Item Description</th>
+                <th className="py-2 text-left">Item Type</th>
+                <th className="py-2 text-left">Sale Unit Price</th>
+                <th className="py-2 text-left">Quantity</th>
+                <th className="py-2 text-left">Payment Status</th>
               </tr>
             </thead>
             <tbody>
               {filteredInvoices.map((invoice, index) => (
                 invoice.ITEMS.map((item, itemIndex) => (
                   <tr key={`${index}-${itemIndex}`} onClick={() => handleSelectInvoice(invoice)} className={selectedInvoice?.INVOICE_ID === invoice.INVOICE_ID ? 'bg-yellow-100' : ''}>
-                    <td className="py-2">
+                    <td className="py-2 px-4 text-left">
                       <input
                         type="checkbox"
                         checked={selectedInvoice?.INVOICE_ID === invoice.INVOICE_ID}
                         onChange={() => handleSelectInvoice(invoice)}
                       />
                     </td>
-                    <td className="py-2">{invoice.INVOICE_NO}</td>
-                    <td className="py-2">{invoice.INVOICE_DATE}</td>
-                    <td className="py-2">{invoice.VENDOR_NAME}</td>
-                    <td className="py-2">{invoice.COMPANY_NAME}</td>
-                    <td className="py-2">{item.ITEM_DESCRIPTION}</td>
-                    <td className="py-2">{item.ITEM_TYPE}</td>
-                    <td className="py-2">{item.SALE_UNIT_PRICE}</td>
-                    <td className="py-2">{item.QUANTITY}</td>
-                    <td className="py-2">{item.INVOICE_PAID}</td>
+                    <td className="py-2 text-left">{invoice.INVOICE_NO}</td>
+                    <td className="py-2 text-left">{invoice.INVOICE_DATE}</td>
+                    <td className="py-2 text-left">{invoice.VENDOR_NAME}</td>
+                    <td className="py-2 text-left">{invoice.COMPANY_NAME}</td>
+                    <td className="py-2 text-left">{item.ITEM_DESCRIPTION}</td>
+                    <td className="py-2 text-left">{item.ITEM_TYPE}</td>
+                    <td className="py-2 text-left">{item.SALE_UNIT_PRICE}</td>
+                    <td className="py-2 text-left">{item.QUANTITY}</td>
+                    <td className="py-2 text-left">{item.INVOICE_PAID}</td>
                   </tr>
                 ))
               ))}

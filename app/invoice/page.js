@@ -461,7 +461,7 @@ const Invoices = () => {
               placeholder="RE"
             />
             {errors.REInput && <span className="text-red-500 text-xs">{errors.REInput}</span>}
-          </div>-
+          </div>
         </div>
 
         {/* Invoice Table */}
@@ -542,9 +542,8 @@ const Invoices = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <button
                       onClick={() => removeRow(index)}
-                      className={`px-4 py-2 rounded ${rows.length <= 1 ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-500 hover:bg-red-700'}`}
+                      className={`px-4 py-2 rounded ${rows.length <= 1 ? 'bg-gray-300 text-gray-500 font-semibold cursor-not-allowed' : 'bg-red-500 text-black font-semibold hover:bg-red-700'}`}
                       disabled={rows.length <= 1}
-
                     >
                       Remove
                     </button>
@@ -556,7 +555,7 @@ const Invoices = () => {
           {/* End of Invoice Table */}
 
           {/* Add row button */}
-          <button onClick={addRow} className="mt-10 p-2 bg-custom-blue border-custom-blue border-2 rounded mx-auto block font-semibold hover:bg-custom-hover-blue hover:text-white">Add Row</button>
+          <button onClick={addRow} className="mt-10 p-2 bg-gray-300 rounded mx-auto block font-semibold hover:bg-gray-400">Add Row</button>
         </div>
 
         {/* Divider */}
@@ -605,7 +604,7 @@ const Invoices = () => {
 
         {/* Send Invoice Button */}
         <div className="flex justify-center space-x-4">
-          <button onClick={handleSendInvoice} className="px-6 py-2 bg-custom-blue border border-custom-blue rounded hover:bg-custom-hover-blue hover:text-white">
+          <button onClick={handleSendInvoice} className="inline-block py-4 px-4 mb-4 w-1/2 bg-gray-300 text-black rounded font-semibold hover:bg-gray-400">
             Accept
           </button>
         </div>
