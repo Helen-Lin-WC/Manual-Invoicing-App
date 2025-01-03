@@ -373,7 +373,7 @@ const handleSave = () => {
           <div className="bg-white shadow-lg rounded-lg p-6">
       <div className='flex flex-row justify-between'>
         <h2 className="text-xl font-semibold mb-4">Invoice List</h2>    
-        <Link href="/invoice">
+        <Link href="/new-invoice">
           <button className="inline-block py-2 px-4 mb-4 bg-gray-300 text-black rounded font-semibold hover:bg-gray-400">
             Create New Invoice
           </button>

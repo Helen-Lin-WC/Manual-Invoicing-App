@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react"; //provides tools for creating dropdown menus
 import { Autocomplete, TextField } from '@mui/material' //provides tools for autofilling input fields
 import generateInvoicePDF from './invoicePdfGenerator'; //imports function for generating the invoice pdf
-import Header from "../components/Header";
 
 //hooks for form functionality
 const Invoices = () => {
@@ -24,7 +23,6 @@ const Invoices = () => {
   const [showErrorMessage, setShowErrorMessage] = useState(false); // State to track if error message should be shown
   const [companyOptions, setCompanyOptions] = useState([]); // State to store company names
   const [itemDescriptions, setItemDescriptions] = useState([]);
-
 
 // pst values for provinces
   const provinces = [
@@ -60,9 +58,6 @@ const Invoices = () => {
         console.error('Error fetching invoice number:', error);
       });
   }, []);
-
-  
-  
 
   useEffect(() => {
     fetchCompanyNames();
