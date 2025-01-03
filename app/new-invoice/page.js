@@ -1,13 +1,16 @@
-"use client" // tells react this page should be rendered on the client side
+'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react"; //provides tools for creating dropdown menus
-import { Autocomplete, TextField } from '@mui/material' //provides tools for autofilling input fields
+import { Autocomplete, TextField } from '@mui/material'; //provides tools for autofilling input fields
 import generateInvoicePDF from './invoicePdfGenerator'; //imports function for generating the invoice pdf
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 //hooks for form functionality
 const Invoices = () => {
+  const router = useRouter();  // Inside the component
   const [selectedCompany, setSelectedCompany] = useState('');
   const [streetName, setStreetName] = useState('');
   const [cityName, setCityName] = useState('');
@@ -23,6 +26,7 @@ const Invoices = () => {
   const [showErrorMessage, setShowErrorMessage] = useState(false); // State to track if error message should be shown
   const [companyOptions, setCompanyOptions] = useState([]); // State to store company names
   const [itemDescriptions, setItemDescriptions] = useState([]);
+
 
 // pst values for provinces
   const provinces = [
@@ -257,84 +261,85 @@ const Invoices = () => {
 
   //functionality on accept
   const handleSendInvoice = async () => {
-    const confirmation = window.confirm("A copy of this form will be sent to generalbanking@wcap.ca. Click Ok to send.");
-    if (!confirmation) return;
-
-    //checks if any required fields are left empty
-    if (!validateFields()) {
-      setShowErrorMessage(true);
-      return;
-    }
-
-    setShowErrorMessage(false);
-
-    try {
-      const pdfBlob = generateInvoicePDF({
-        invoiceNumber,
-        billingDate,
-        selectedCompany,
-        streetName,
-        cityName,
-        selectedProvince,
-        postalCode,
-        REInput,
-        rows,
-        subtotal,
-        GST,
-        PST,
-        PSTAmount,
-        totalDue,
-        comment
-      });
-
-      //appends all data to be sent to the server.js file
-      const formData = new FormData();
-      formData.append('pdf', pdfBlob, 'invoice.pdf');
-      formData.append('selectedCompany', selectedCompany);
-      formData.append('streetName', streetName);
-      formData.append('cityName', cityName);
-      formData.append('selectedProvince', selectedProvince);
-      formData.append('postalCode', postalCode);
-      formData.append('REInput', REInput);
-      formData.append('invoiceNumber', invoiceNumber);
-      formData.append('billingDate', billingDate);
-      formData.append('unitPrice', rows.map(row => row.unitPrice));
-      formData.append('quantity', rows.map(row => row.quantity));
-      formData.append('totalDue', rows.map(row => row.totalDue));
-      formData.append('costCentre', rows.map(row => row.cc));
-      formData.append('coding', rows.map(row => row.coding));
-      formData.append('item', rows.map(row => row.item));
-      formData.append('description', rows.map(row => row.description));
-      formData.append('comment', comment);
-      formData.append('rows', JSON.stringify(rows));
-
-      const response = await axios.post('http://localhost:3001/api/sendInvoice', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-    if (response.status === 200) {
-      alert('Invoice sent successfully!');
-      //clears all input fields when an invoice is successfully sent
-      setSelectedCompany('');
-      setStreetName('');
-      setCityName('');
-      setSelectedProvince('');
-      setPostalCode('');
-      setREInput('');
-      setRows([{ quantity: '', item: '', description: '', cc: '', coding: '', unitPrice: '' }]);
-      setComment('');
-      window.location.href = '/invoice'; // Refreshes the page after invoice is successfully created
    
-      } else {
-        console.error('Unexpected response:', response);
-        alert('Failed to send invoice. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error sending email:', error);
-      alert('Failed to send invoice. Please try again.');
-    }
+    //TODO: Uncomment these confirmations
+    // const confirmation = window.confirm("A copy of this form will be sent to generalbanking@wcap.ca. Click Ok to send.");
+    // if (!confirmation) return;
+
+    // //checks if any required fields are left empty
+    // if (!validateFields()) {
+    //   setShowErrorMessage(true);
+    //   return;
+    // }
+
+    // setShowErrorMessage(false);
+
+    // try {
+    //   const pdfBlob = generateInvoicePDF({
+    //     invoiceNumber,
+    //     billingDate,
+    //     selectedCompany,
+    //     streetName,
+    //     cityName,
+    //     selectedProvince,
+    //     postalCode,
+    //     REInput,
+    //     rows,
+    //     subtotal,
+    //     GST,
+    //     PST,
+    //     PSTAmount,
+    //     totalDue,
+    //     comment
+    //   });
+
+    //   //appends all data to be sent to the server.js file
+    //   const formData = new FormData();
+    //   formData.append('pdf', pdfBlob, 'invoice.pdf');
+    //   formData.append('selectedCompany', selectedCompany);
+    //   formData.append('streetName', streetName);
+    //   formData.append('cityName', cityName);
+    //   formData.append('selectedProvince', selectedProvince);
+    //   formData.append('postalCode', postalCode);
+    //   formData.append('REInput', REInput);
+    //   formData.append('invoiceNumber', invoiceNumber);
+    //   formData.append('billingDate', billingDate);
+    //   formData.append('unitPrice', rows.map(row => row.unitPrice));
+    //   formData.append('quantity', rows.map(row => row.quantity));
+    //   formData.append('totalDue', rows.map(row => row.totalDue));
+    //   formData.append('costCentre', rows.map(row => row.cc));
+    //   formData.append('coding', rows.map(row => row.coding));
+    //   formData.append('item', rows.map(row => row.item));
+    //   formData.append('description', rows.map(row => row.description));
+    //   formData.append('comment', comment);
+    //   formData.append('rows', JSON.stringify(rows));
+
+    //   const response = await axios.post('http://localhost:3001/api/sendInvoice', formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    //   });
+
+    // if (response.status === 200) {
+    //   alert('Invoice sent successfully!');
+    //   //clears all input fields when an invoice is successfully sent
+    //   setSelectedCompany('');
+    //   setStreetName('');
+    //   setCityName('');
+    //   setSelectedProvince('');
+    //   setPostalCode('');
+    //   setREInput('');
+    //   setRows([{ quantity: '', item: '', description: '', cc: '', coding: '', unitPrice: '' }]);
+    //   setComment('');
+         router.push('/'); //Return to home page 
+    //   } else {
+    //     console.error('Unexpected response:', response);
+    //     alert('Failed to send invoice. Please try again.');
+    //   }
+    // } catch (error) {
+    //   console.error('Error sending email:', error);
+    //   alert('Failed to send invoice. Please try again.');
+    // }
   }
   
 
@@ -342,7 +347,11 @@ const Invoices = () => {
   return (
 
         <div className="flex flex-col max-w-6xl mx-auto px-4 py-6 m-2 bg-white">
-
+         <Link href="/">
+          <button className="inline-block py-2 px-4 mb-4 bg-gray-300 text-black rounded font-semibold hover:bg-gray-400">
+            Back
+          </button>
+        </Link>  
         {/* Logo and Address Section */}
         <div className="grid grid-cols-2 gap-4 mb-8">
           <div className="flex flex-col space-y-1">
