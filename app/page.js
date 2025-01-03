@@ -1,7 +1,6 @@
 "use client"
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import Header from "./components/Header";
 
 export default function Home() {
   const [viewInvoices, setViewInvoices] = useState([]);
@@ -100,19 +99,20 @@ const mockInvoices = [
     CITY: 'Calgary',
     PROVINCE: 'Alberta',
     POSTAL_CODE: 'T2P 1G1',
-    INVOICE_PAID: 'N',
     ITEMS: [
       {
         ITEM_DESCRIPTION: 'Consulting Services',
         ITEM_TYPE: 'Service',
-        SALE_UNIT_PRICE: '1000.00',
-        QUANTITY: '1',
+        SALE_UNIT_PRICE: '10000.00',
+        QUANTITY: '450',
+        INVOICE_PAID: 'Y'
       },
       {
         ITEM_DESCRIPTION: 'Software License',
         ITEM_TYPE: 'License',
-        SALE_UNIT_PRICE: '500.00',
-        QUANTITY: '2',
+        SALE_UNIT_PRICE: '900.00',
+        QUANTITY: '100',
+        INVOICE_PAID: 'Y'
       }
     ]
   },
@@ -126,13 +126,13 @@ const mockInvoices = [
     CITY: 'Edmonton',
     PROVINCE: 'Alberta',
     POSTAL_CODE: 'T5J 2R4',
-    INVOICE_PAID: 'Y',
     ITEMS: [
       {
         ITEM_DESCRIPTION: 'Hardware Setup',
         ITEM_TYPE: 'Hardware',
         SALE_UNIT_PRICE: '750.00',
         QUANTITY: '1',
+        INVOICE_PAID: 'N'
       }
     ]
   }
@@ -395,41 +395,41 @@ const handleSave = () => {
           </div>
 
           {/* Table for filtered invoices */}
-          <table className="min-w-full bg-white mt-4">
+          <table className="min-w-full bg-white mt-4 table-fixed">
             <thead>
               <tr className="py-2">
-                <th className="py-2 text-left">Select</th>
-                <th className="py-2 text-left">Invoice Number</th>
-                <th className="py-2 text-left">Invoice Date</th>
-                <th className="py-2 text-left">Vendor Name</th>
-                <th className="py-2 text-left">Company Name</th>
-                <th className="py-2 text-left">Item Description</th>
-                <th className="py-2 text-left">Item Type</th>
-                <th className="py-2 text-left">Sale Unit Price</th>
-                <th className="py-2 text-left">Quantity</th>
-                <th className="py-2 text-left">Payment Status</th>
+                <th className="py-2 text-center">Select</th>
+                <th className="py-2 text-center">Invoice Number</th>
+                <th className="py-2 text-center">Invoice Date</th>
+                <th className="py-2 text-center">Vendor Name</th>
+                <th className="py-2 text-center">Company Name</th>
+                <th className="py-2 text-center">Item Description</th>
+                <th className="py-2 text-center">Item Type</th>
+                <th className="py-2 text-center">Sale Unit Price</th>
+                <th className="py-2 text-center">Quantity</th>
+                <th className="py-2 text-center">Payment Status</th>
               </tr>
             </thead>
             <tbody>
               {filteredInvoices.map((invoice, index) => (
                 invoice.ITEMS.map((item, itemIndex) => (
                   <tr key={`${index}-${itemIndex}`} onClick={() => handleSelectInvoice(invoice)} className={selectedInvoice?.INVOICE_ID === invoice.INVOICE_ID ? 'bg-yellow-100' : ''}>
-                    <td className="py-2 px-4 text-left">
+                    <td className="py-2 px-4 text-center">
                       <input
                         type="checkbox"
                         checked={selectedInvoice?.INVOICE_ID === invoice.INVOICE_ID}
                         onChange={() => handleSelectInvoice(invoice)}
                       />
                     </td>
-                    <td className="py-2 text-left">{invoice.INVOICE_NO}</td>
-                    <td className="py-2 text-left">{invoice.INVOICE_DATE}</td>
-                    <td className="py-2 text-left">{invoice.VENDOR_NAME}</td>
-                    <td className="py-2 text-left">{invoice.COMPANY_NAME}</td>
-                    <td className="py-2 text-left">{item.ITEM_DESCRIPTION}</td>
-                    <td className="py-2 text-left">{item.ITEM_TYPE}</td>
-                    <td className="py-2 text-left">{item.SALE_UNIT_PRICE}</td>
-                    <td className="py-2 text-left">{item.QUANTITY}</td>
-                    <td className="py-2 text-left">{item.INVOICE_PAID}</td>
+                    <td className="py-2 text-center">{invoice.INVOICE_NO}</td>
+                    <td className="py-2 text-center">{invoice.INVOICE_DATE}</td>
+                    <td className="py-2 text-center">{invoice.VENDOR_NAME}</td>
+                    <td className="py-2 text-center">{invoice.COMPANY_NAME}</td>
+                    <td className="py-2 text-center">{item.ITEM_DESCRIPTION}</td>
+                    <td className="py-2 text-center">{item.ITEM_TYPE}</td>
+                    <td className="py-2 text-center">{item.SALE_UNIT_PRICE}</td>
+                    <td className="py-2 text-center">{item.QUANTITY}</td>
+                    <td className="py-2 text-center">{item.INVOICE_PAID}</td>
                   </tr>
                 ))
               ))}
